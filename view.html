@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>View Private Note</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header>
+    <div class="logo">
+      <h1>priv<span class="lock">&#x1F512;</span>ote</h1>
+    </div>
+    <p class="tagline">This note will self-destruct after you close this page.</p>
+  </header>
+  <main>
+    <div id="note-container">
+      <h2>Private Note</h2>
+      <div id="note-content" class="note-display"></div>
+      <div id="note-error" class="note-error" style="display: none;">
+        <p>This note has already been viewed or does not exist.</p>
+      </div>
+      <div class="button-container">
+        <button id="create-new">Create a new note</button>
+      </div>
+    </div>
+  </main>
+  <script src="view.js"></script>
+</body>
+</html>

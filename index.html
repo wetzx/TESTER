@@ -14,13 +14,23 @@
     <p class="tagline">Send notes that will self-destruct after being read.</p>
   </header>
   <main>
-    <div class="note-container">
+    <div id="create-container">
       <h2>New note</h2>
       <textarea id="note-content" placeholder="Write your note here..."></textarea>
       <div class="button-container">
         <button id="create-note">Create note</button>
         <button id="show-options">Show options</button>
       </div>
+    </div>
+    <div id="link-container" style="display: none;">
+      <h2>Your note has been created!</h2>
+      <p>Share this link with the intended recipient:</p>
+      <div class="link-box">
+        <input type="text" id="note-link" readonly>
+        <button id="copy-link">Copy</button>
+      </div>
+      <p class="warning">This link will only work once. After viewing, the note will be destroyed.</p>
+      <button id="create-new">Create another note</button>
     </div>
   </main>
   <script src="script.js"></script>

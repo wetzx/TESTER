@@ -1,72 +1,95 @@
-import { v4 as uuidv4 } from 'uuid';
+const { v4: uuidv4 } = require('uuid');
 
-const notes = new Map();
+// In-memory storage (will be lost on function restart)
+// For production, use a database like Fauna, Supabase, etc.
+const notes = {};
 
-export async function handler(event) {
-  try {
-    if (event.httpMethod === 'POST') {
-      const { content } = JSON.parse(event.body);
-      const id = uuidv4();
-      notes.set(id, content);
-      return {
-        statusCode: 200,
-        body: JSON.stringify({ id }),
-        headers: {
-          "Content-Type": "application/json",
-          "Access-Control-Allow-Origin": "*", // Allow from any origin
-          "Access-Control-Allow-Methods": "POST, GET, OPTIONS",
-          "Access-Control-Allow-Headers": "Content-Type"
-        }
-      };
-    } else if (event.httpMethod === 'GET') {
-      const id = event.queryStringParameters.id;
-      if (notes.has(id)) {
-        const content = notes.get(id);
-        notes.delete(id);
-        return {
-          statusCode: 200,
-          body: JSON.stringify({ content }),
-          headers: {
-            "Content-Type": "application/json",
-            "Access-Control-Allow-Origin": "*", // Allow from any origin
-            "Access-Control-Allow-Methods": "POST, GET, OPTIONS",
-            "Access-Control-Allow-Headers": "Content-Type"
-          }
-        };
-      } else {
-        return {
-          statusCode: 404,
-          body: JSON.stringify({ error: 'Note not found or already viewed' }),
-          headers: {
-            "Content-Type": "application/json",
-            "Access-Control-Allow-Origin": "*", // Allow from any origin
-            "Access-Control-Allow-Methods": "POST, GET, OPTIONS",
-            "Access-Control-Allow-Headers": "Content-Type"
-          }
-        };
-      }
-    }
+exports.handler = async function(event, context) {
+  // Set CORS headers
+  const headers = {
+    'Access-Control-Allow-Origin': '*',
+    'Access-Control-Allow-Headers': 'Content-Type',
+    'Access-Control-Allow-Methods': 'POST, GET, OPTIONS'
+  };
 
+  // Handle OPTIONS request (CORS preflight)
+  if (event.httpMethod === 'OPTIONS') {
     return {
-      statusCode: 405,
-      body: 'Method Not Allowed',
-      headers: {
-        "Access-Control-Allow-Origin": "*", // Allow from any origin
-        "Access-Control-Allow-Methods": "POST, GET, OPTIONS",
-        "Access-Control-Allow-Headers": "Content-Type"
-      }
-    };
-  } catch (error) {
-    console.error("Function error:", error);
-    return {
-      statusCode: 500,
-      body: JSON.stringify({ error: 'Internal Server Error', details: error.message }),
-      headers: {
-        "Content-Type": "application/json",
-        "Access-Control-Allow-Origin": "*", // Allow from any origin
-        "Access-Control-Allow-Methods": "POST, GET, OPTIONS",
-        "Access-Control-Allow-Headers": "Content-Type"
-      }
+      statusCode: 200,
+      headers,
+      body: ''
     };
   }
-}
+
+  try {
+    // Create a new note
+    if (event.httpMethod === 'POST') {
+      const body = JSON.parse(event.body);
+      const noteId = uuidv4();
+      
+      if (!body.content) {
+        return {
+          statusCode: 400,
+          headers: { ...headers, 'Content-Type': 'application/json' },
+          body: JSON.stringify({ error: 'Note content is required' })
+        };
+      }
+      
+      notes[noteId] = body.content;
+      
+      console.log(`Note created with ID: ${noteId}`);
+      
+      return {
+        statusCode: 200,
+        headers: { ...headers, 'Content-Type': 'application/json' },
+        body: JSON.stringify({ id: noteId })
+      };
+    }
+    
+    // Retrieve a note
+    if (event.httpMethod === 'GET') {
+      const noteId = event.queryStringParameters?.id;
+      
+      if (!noteId) {
+        return {
+          statusCode: 400,
+          headers: { ...headers, 'Content-Type': 'application/json' },
+          body: JSON.stringify({ error: 'Note ID is required' })
+        };
+      }
+      
+      if (!notes[noteId]) {
+        return {
+          statusCode: 404,
+          headers: { ...headers, 'Content-Type': 'application/json' },
+          body: JSON.stringify({ error: 'Note not found or already viewed' })
+        };
+      }
+      
+      const content = notes[noteId];
+      delete notes[noteId]; // Delete after reading
+      
+      console.log(`Note retrieved and deleted: ${noteId}`);
+      
+      return {
+        statusCode: 200,
+        headers: { ...headers, 'Content-Type': 'application/json' },
+        body: JSON.stringify({ content })
+      };
+    }
+    
+    return {
+      statusCode: 405,
+      headers,
+      body: JSON.stringify({ error: 'Method not allowed' })
+    };
+  } catch (error) {
+    console.error('Function error:', error);
+    
+    return {
+      statusCode: 500,
+      headers: { ...headers, 'Content-Type': 'application/json' },
+      body: JSON.stringify({ error: 'Internal server error', details: error.message })
+    };
+  }
+};

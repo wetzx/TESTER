@@ -34,10 +34,6 @@ main {
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
-.note-container {
-  position: relative;
-}
-
 h2 {
   font-size: 1.2em;
   margin-bottom: 10px;
@@ -51,6 +47,18 @@ textarea {
   background-color: #ffffd7;
   resize: vertical;
   font-size: 1em;
+  box-sizing: border-box;
+}
+
+.note-display {
+  width: 100%;
+  min-height: 200px;
+  padding: 10px;
+  border: 1px solid #ddd;
+  background-color: #ffffd7;
+  font-size: 1em;
+  white-space: pre-wrap;
+  box-sizing: border-box;
 }
 
 .button-container {
@@ -75,4 +83,46 @@ button {
   background-color: #f0f0f0;
   border: 1px solid #ddd;
   color: #333;
+}
+
+#link-container {
+  margin-top: 20px;
+}
+
+.link-box {
+  display: flex;
+  margin-bottom: 10px;
+}
+
+#note-link {
+  flex-grow: 1;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-right: none;
+}
+
+#copy-link {
+  background-color: #f0f0f0;
+  border: 1px solid #ddd;
+  color: #333;
+}
+
+.warning {
+  color: #8b0000;
+  font-weight: bold;
+}
+
+.note-error {
+  color: #8b0000;
+  font-weight: bold;
+  text-align: center;
+  padding: 20px;
+}
+
+#create-new {
+  background-color: #8b0000;
+  color: white;
+  border: none;
+  margin: 20px auto;
+  display: block;
 }
