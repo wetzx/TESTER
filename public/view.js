@@ -3,7 +3,7 @@ document.addEventListener('DOMContentLoaded', async () => {
   const id = window.location.pathname.split('/').pop();
 
   try {
-    const response = await fetch(`/api/notes/${id}`);
+    const response = await fetch(`/.netlify/functions/create-note?id=${id}`);
     if (response.ok) {
       const data = await response.json();
       noteContent.textContent = data.content;
@@ -17,7 +17,5 @@ document.addEventListener('DOMContentLoaded', async () => {
 });
 
 window.addEventListener('beforeunload', () => {
-  // This message won't actually be shown in modern browsers,
-  // but it will trigger the confirmation dialog
   return 'Are you sure you want to leave? This note will be destroyed.';
 });
