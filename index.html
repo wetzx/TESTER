@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Privnote Clone</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header>
+    <div class="logo">
+      <h1>priv<span class="lock">&#x1F512;</span>ote</h1>
+    </div>
+    <p class="tagline">Send notes that will self-destruct after being read.</p>
+  </header>
+  <main>
+    <div id="create-note-container" class="note-container">
+      <h2>New note</h2>
+      <textarea id="note-content" placeholder="Write your note here..."></textarea>
+      <div id="options">
+        <div class="option-group">
+          <h3>Note self-destructs</h3>
+          <select id="self-destruct-option">
+            <option value="after-reading">after reading it</option>
+          </select>
+          <label>
+            <input type="checkbox" id="no-confirmation">
+            Do not ask for confirmation before showing and destroying the note.
+          </label>
+        </div>
+        <div class="option-group">
+          <h3>Manual password</h3>
+          <p>Enter a custom password to encrypt the note</p>
+          <input type="password" id="manual-password" placeholder="Enter password">
+          <input type="password" id="confirm-password" placeholder="Confirm password">
+        </div>
+        <div class="option-group">
+          <h3>Destruction notification</h3>
+          <input type="email" id="notification-email" placeholder="E-mail to notify when note is destroyed">
+          <input type="text" id="reference-name" placeholder="Reference name for the note (optional)">
+        </div>
+      </div>
+      <div id="error-message" class="hidden">Error: the note text is empty</div>
+      <div class="button-container">
+        <button id="create-note">Create note</button>
+      </div>
+    </div>
+    <div id="note-link-container" class="hidden">
+      <h2>Your private note link</h2>
+      <p>Share this link with the intended recipient. The note will be destroyed after viewing.</p>
+      <input type="text" id="note-link" readonly>
+      <button id="copy-link">Copy link</button>
+      <button id="create-new-note">Create a new note</button>
+    </div>
+    <div id="view-note-container" class="hidden">
+      <h2>Private Note</h2>
+      <div id="note-content-view"></div>
+      <p>This note has been destroyed and cannot be accessed again.</p>
+    </div>
+  </main>
+  <script src="script.js"></script>
+</body>
+</html>

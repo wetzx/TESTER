@@ -1,0 +1,120 @@
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+  background-color: #f0f0f0;
+}
+
+header {
+  background-color: #8b0000;
+  color: white;
+  padding: 10px 20px;
+}
+
+.logo h1 {
+  font-size: 2.5em;
+  margin: 0;
+}
+
+.lock {
+  font-size: 0.8em;
+  vertical-align: middle;
+}
+
+.tagline {
+  margin: 5px 0;
+  font-size: 0.9em;
+}
+
+main {
+  max-width: 800px;
+  margin: 20px auto;
+  padding: 20px;
+  background-color: white;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.note-container {
+  position: relative;
+}
+
+h2, h3 {
+  font-size: 1.2em;
+  margin-bottom: 10px;
+}
+
+textarea, input[type="text"], input[type="password"], input[type="email"], select {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ddd;
+  font-size: 1em;
+  margin-bottom: 10px;
+}
+
+textarea {
+  height: 200px;
+  background-color: #ffffd7;
+  resize: vertical;
+}
+
+.button-container {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 10px;
+}
+
+button {
+  padding: 10px 20px;
+  font-size: 1em;
+  cursor: pointer;
+  margin-right: 10px;
+}
+
+#create-note, #copy-link {
+  background-color: #8b0000;
+  color: white;
+  border: none;
+}
+
+#create-new-note {
+  background-color: #f0f0f0;
+  border: 1px solid #ddd;
+  color: #333;
+}
+
+.hidden {
+  display: none;
+}
+
+.option-group {
+  margin-bottom: 20px;
+}
+
+#error-message {
+  background-color: #ff6347;
+  color: white;
+  padding: 10px;
+  margin-bottom: 10px;
+}
+
+label {
+  display: block;
+  margin-top: 10px;
+}
+
+#note-link {
+  width: calc(100% - 120px);
+  display: inline-block;
+}
+
+#copy-link {
+  width: 100px;
+  margin-left: 10px;
+}
+
+#note-content-view {
+  background-color: #ffffd7;
+  padding: 20px;
+  border: 1px solid #ddd;
+  margin-bottom: 20px;
+}
