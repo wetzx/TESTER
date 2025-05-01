@@ -5,12 +5,18 @@ document.addEventListener('DOMContentLoaded', () => {
   const linkContainer = document.getElementById('link-container');
   const noteLink = document.getElementById('note-link');
 
+  if (!createNoteButton) {
+    console.error('createNoteButton element not found!');
+    return;
+  }
+
   if (!noteLink) {
     console.error('noteLink element not found!');
     return;
   }
 
   createNoteButton.addEventListener('click', async () => {
+    console.log('Create note button clicked!'); // Add this line
     const content = noteContent.value.trim();
     if (content) {
       try {
