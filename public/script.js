@@ -16,7 +16,7 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   createNoteButton.addEventListener('click', async () => {
-    console.log('Create note button clicked!'); // Add this line
+    console.log('Create note button clicked!');
     const content = noteContent.value.trim();
     if (content) {
       try {
@@ -37,8 +37,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
         const data = await response.json();
         const link = `${window.location.origin}/view/${data.id}`;
+        linkContainer.style.display = 'block'; // Ensure linkContainer is visible
         noteLink.value = link;
-        linkContainer.style.display = 'block';
         noteContent.value = '';
       } catch (error) {
         console.error('Error creating note:', error);
